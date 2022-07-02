@@ -1,56 +1,48 @@
-import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
+import Financiamento.Class.Cliente;
 
 public class Financiamento {
 
 	public static void main(String[] args) {
-		
-		String nome, sobrenome;
-		double renda, endividamento, parcelamento;
-		
-		Scanner input = new Scanner(System.in);
-		System.out.println("Qual é o seu nome?");
-		nome = input.nextLine();
-		System.out.println("Qual é o seu sobrenome");
-		sobrenome = input.nextLine();
-		
-		System.out.println("\nTudo bem " +nome +" "+ sobrenome + "? \nAgora precisamos sabe mais sobre você!");
-		
-		System.out.println("Qual o valor da sua renda mensal?");
-		renda = input.nextDouble();
-		
-		System.out.println("Você sabia que pela lei podemos fazer financiamento somente até 40% de endividamento?");
-		System.out.println("De quanto seria o seu endividamento mensal?");
-		endividamento = input.nextDouble();
-		
-		double porcent_endividamento = (endividamento / renda) *100;
-		double margem_fianciamento = (0.4 * renda) - endividamento;
-		
-		System.out.println("A porcentagem de seu endividamento é de "+ porcent_endividamento+"%");
-		
-		if( porcent_endividamento < 40.0) {
-			System.out.println("Margem disponível para financiamento\n"
-					+ "Financiamento será analisado!\n\n"
-					+ "Sua margem disponível para financiamento é de "+margem_fianciamento);
-			        System.out.println("Qual o valor de parcela?");
-			        parcelamento = input.nextDouble();
-			        
-					double end_total = ((parcelamento+endividamento) / renda)*100;
-					// Porcentagem Máxima de Endividamento 
-					if (end_total <= 40) {
-						System.out.println("Valor enquadrado dentro de sua margem!\n"
-								+ "Vamos solicitar a documentação para prosseguir com a operação.");
-						} else {
-							System.out.println("Financiamento fora da margem disponível\n"
-									+ "Por favor atualize sua renda.");
-							}
 
-			
-			
+		Cliente cliente1 = new Cliente();
+		String nome = JOptionPane.showInputDialog("Qual o seu nome ?");
+		cliente1.setNome(nome);
+
+		JOptionPane.showMessageDialog(null, "Bem vindo ao nosso simulador " + nome);
+		JOptionPane.showMessageDialog(null, "Vamos precisar de algumas informações suas para continuar");
+
+		String idade = JOptionPane.showInputDialog("Qual a sua idade ?");
+		String renda = JOptionPane.showInputDialog("Qual o valor da sua renda?");
+		String endividamento = JOptionPane.showInputDialog("Qual o valor do seu endividamento mensal?");
+
+		cliente1.setIdade(Integer.valueOf(idade));
+		cliente1.setRenda(Double.parseDouble(renda));
+		cliente1.setEndividamento(Double.valueOf(endividamento));
+
+		JOptionPane.showMessageDialog(null,
+				"Você sabia que pela lei podemos fazer financiamento até 40% de endividamento?");
+		JOptionPane.showMessageDialog(null, "O seu endividamento é de " + cliente1.getPorcent_Endividamento() + " %");
+
+		if (cliente1.getPorcent_Endividamento() < 40.0) {
+			JOptionPane.showMessageDialog(null, "Margem disponível para financiamento.\nFinanciamento será analisado.\n"
+					+ "Sua margem disponível para financiamento é de R$" + cliente1.getMargem_Financiamento());
+			String parcelamento = JOptionPane.showInputDialog("Qual o valor da parcela?");
+			cliente1.setParcelamento(Double.parseDouble(parcelamento));
+			if (cliente1.getEnd_Total() <= 40) {
+				JOptionPane.showMessageDialog(null, "Valor enquadrado dentro de margem\n"
+						+ "Vamos solicitar a documentação para prosseguir com a operação");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Financiamento fora da margem disponível\n" + "Por favor atualize sua renda.");
+			}
+
 		} else {
-			System.out.println("Margem não disponível para financiamento");
+			JOptionPane.showMessageDialog(null, "Margem não disponível para financiamento");
 		}
 
-		input.close();
 
 	}
 
